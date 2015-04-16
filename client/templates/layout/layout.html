@@ -8,11 +8,13 @@
 </template>
 
 <template name="coreLayout">
-  <nav class="reaction-navigation-header">{{> yield region="layoutHeader"}}</nav>
+  <nav class="top-bar reaction-navigation-header" data-topbar role="navigation">
+    {{> yield region="layoutHeader"}}
+  </nav>
   <nav class="reaction-cart-drawer">{{>cartDrawer}}</nav>
   <div class="reaction-dashboard-drawer">{{> yield region="dashboard"}}</div>
   <main role="main" id="main">
-    <div class="container-fluid">
+    <div class="row full-width container-fluid">
       <span id="layout-alerts">{{>bootstrapAlerts}}</span>
       {{> yield}}
     </div>
