@@ -1,24 +1,23 @@
 <template name="productImageGallery">
-<div id="galleryDropPane" class="galleryDropPane">
-  <ul class="gallery">
-    {{#each media}}
-      {{> imageDetail}}
-    {{else}}
-     <li>
-        <img src= "/resources/placeholder.gif" class="img-responsive" id="img-upload">
-     </li>
-    {{/each}}
-  </ul>
-  {{>imageUploader}}
-</div>
-
+  <div id="galleryDropPane" class="galleryDropPane">
+    <ul class="gallery">
+      {{#each media}}
+        {{> imageDetail}}
+      {{else}}
+       <li>
+          <img src= "/resources/placeholder.gif" class="img-responsive" id="img-upload">
+       </li>
+      {{/each}}
+    </ul>
+    {{>imageUploader}}
+  </div>
 </template>
 
 <template name="imageDetail">
   <li class="gallery-sortable" data-index="{{_id}}">
     <img src="{{url uploading='/resources/placeholder.gif' storing='/resources/placeholder.gif' store='large'}}" class="img-responsive" alt="{{title}}">
     {{#unless this.isUploaded}}
-      {{> FS.UploadProgressBar bootstrap=true}}
+      {{> FS.UploadProgressBar}}
     {{/unless}}
     {{#if userHasRole "admin"}}
       <div class="gallery-tools">
@@ -29,10 +28,14 @@
 </template>
 
 <template name="imageUploader">
-{{#if userHasRole "admin"}}
-  <div id="dropzone" class="dropzone">
-   <input name="files" id="files" class="hidden" type="file" multiple/>
-    <div class="btn btn-default btn-block" id="btn-upload" data-i18n="productDetail.dropFile">Drop file to upload</div>
-  </div>
-{{/if}}
+  {{#if userHasRole "admin"}}
+    <div id="dropzone" class="dropzone">
+     <input name="files" id="files" class="hide" type="file" multiple/>
+      <div class="file-upload-button-wrap" id="btn-upload">
+        <div class="file-upload-button" data-i18n="productDetail.dropFile">
+          Upload Images
+        </div>
+      </div>
+    </div>
+  {{/if}}
 </template>
