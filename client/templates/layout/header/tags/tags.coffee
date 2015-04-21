@@ -119,7 +119,7 @@ Template.tagInputForm.rendered = ->
   # http://vitalets.github.io/x-editable/docs.html
   # *****************************************************
     $(".tag-edit-list").sortable
-      items: "> li"
+      items: "> dd"
       axis: "x"
       handle: '.tag-input-group-handle'
       update: (event, ui) ->
