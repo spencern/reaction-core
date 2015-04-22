@@ -1,8 +1,8 @@
 Template.variant.helpers
   progressBar: () ->
-    if @.inventoryPercentage <= 10 then "progress-bar-danger"
-    else if @.inventoryPercentage <= 30 then "progress-bar-warning"
-    else "progress-bar-success"
+    if @.inventoryPercentage <= 10 then "danger"
+    else if @.inventoryPercentage <= 30 then "warning"
+    else "success"
 
   selectedVariant: () ->
     current = selectedVariant()

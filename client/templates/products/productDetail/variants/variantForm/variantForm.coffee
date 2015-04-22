@@ -21,7 +21,7 @@ Template.variantForm.helpers
 
   variantFormVisible: () ->
     unless Session.equals "variant-form-"+@._id, true
-      return "hidden"
+      return "hide"
 
   displayInventoryManagement: () ->
     unless @inventoryManagement is true

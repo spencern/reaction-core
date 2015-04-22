@@ -14,9 +14,11 @@
   <nav class="reaction-cart-drawer">{{>cartDrawer}}</nav>
   <div class="reaction-dashboard-drawer">{{> yield region="dashboard"}}</div>
   <main role="main" id="main">
-    <div class="row full-width container-fluid">
-      <span id="layout-alerts">{{>bootstrapAlerts}}</span>
-      {{> yield}}
+    <div class="row full-width">
+      <div class="small-12 large-11 end columns">
+        <span id="layout-alerts">{{>bootstrapAlerts}}</span>
+        {{> yield}}
+      </div>
     </div>
   </main>
   <footer class="reaction-navigation-footer" id="footer">{{>yield region="layoutFooter"}}</footer>
