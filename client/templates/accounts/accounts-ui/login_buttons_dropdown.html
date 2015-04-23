@@ -119,17 +119,18 @@
       </div>
 
       {{#if inLoginFlow}}
-        {{#if showCreateAccountLink}}
-          {{> _loginButtonsBackToSignUpLink}}
-        {{/if}}
-
-        {{#if showForgotPasswordLink}}
-          <div class="additional-link-container">
+        <div class="additional-link-container">
+          {{#if showCreateAccountLink}}
+            <a id="signup-link" class="additional-link">
+              <span data-i18n="accountsUI.createAccount">Create an Account</span>
+            </a>
+          {{/if}}
+          {{#if showForgotPasswordLink}}
             <a id="forgot-password-link" class="additional-link">
               <span data-i18n="accountsUI.forgotPassword">Reset password</span>
             </a>
-          </div>
-        {{/if}}
+          {{/if}}
+        </div>
         {{#if inline }}
         {{#if canCheckoutAsGuest }}
           {{> core_loginButtonsBackToGuestLoginLink}}

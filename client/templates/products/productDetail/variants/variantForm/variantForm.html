@@ -71,7 +71,7 @@
                 <span class="help-block">{{afFieldMessage name='inventoryPolicy'}}</span>
                 {{/if}}
             </div>
-            <div class="lowInventoryWarningThreshold form-group{{#if afFieldIsInvalid name='lowInventoryWarningThreshold'}} has-error{{/if}}" style="{{displayLowInventoryWarning doc}}">
+            <div class="lowInventoryWarningThreshold form-group{{#if afFieldIsInvalid name='lowInventoryWarningThreshold'}} has-error{{/if}} row collapse" style="{{displayLowInventoryWarning doc}}">
                 <span class="small-5 medium-12 large-10 columns">
                   <label class="control-label">{{afFieldLabelText name='lowInventoryWarningThreshold'}}</label>
                   {{>afFieldInput name='lowInventoryWarningThreshold' placeholder="0"}}

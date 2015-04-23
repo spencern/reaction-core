@@ -1,34 +1,21 @@
 <template name="loginDropdown">
   <li class="has-dropdown">
-<!-- <div class="dropdown" role="menu"> -->
-{{#if currentUser}}
-  <a href="#">
-    <span class="circular-icon" style="background: url({{socialImage}}) no-repeat center;"></span>
-    <span id="logged-in-display-name"> {{displayName}}<b class="caret"></b></span>
-  </a>
-  <ul class="dropdown">
-    {{> userDropdown}}
-  </ul>
-  <!-- <div class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000">
-    <span class="circular-icon" style="background: url({{socialImage}}) no-repeat center;"></span>
-    <span id="logged-in-display-name"> {{displayName}}<b class="caret"></b></span>
-  </div>
-  <div class="dropdown-menu pull-right" role="menu">
-  {{> userDropdown}}
-  </div> -->
-{{else}}
-  <a href="#"><span data-i18n="accountsUI.signIn">Sign In</span><b class="caret"></b></a>
-  <ul class="dropdown">
-    {{> _loginButtonsLoggedOutAllServices}}
-  </ul>
-  <!-- <div class="accounts-dropdown">
-    <div class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000"></div>
-    <div class="accounts-dialog accounts-layout dropdown-menu pull-right">
-    {{> _loginButtonsLoggedOutAllServices}}
-    </div>
-  </div> -->
-{{/if}}
-<!-- </div> -->
+    {{#if currentUser}}
+      <a href="#">
+        <span class="circular-icon" style="background: url({{socialImage}}) no-repeat center;"></span>
+        <span id="logged-in-display-name"> {{displayName}}<b class="caret"></b></span>
+      </a>
+      <ul class="dropdown">
+        {{> userDropdown}}
+      </ul>
+    {{else}}
+      <a href="#"><span data-i18n="accountsUI.signIn">Sign In</span><b class="caret"></b></a>
+      <ul class="dropdown accounts-dropdown">
+        <div class="accounts-dialog accounts-layout dropdown-menu">
+          {{> _loginButtonsLoggedOutAllServices}}
+        </div>
+      </ul>
+    {{/if}}
   </li>
 </template>
 

@@ -10,10 +10,12 @@
   </div>
   {{#if childVariants}}
     <small data-i18n="variantList.moreOptions">There are more options available for this selection.</small>
-    <div class="row variant-product-options">
-      {{#each childVariants}}
-      <button type="button" class="btn btn-default variant-select-option">{{optionTitle}}</button>
-      {{/each}}
+    <div class="row">
+      <div class="small-12 columns variant-product-options">
+        {{#each childVariants}}
+        <button type="button" class="wire-option-button variant-select-option">{{optionTitle}}</button>
+        {{/each}}
+      </div>
     </div>
   {{/if}}
 </template>
