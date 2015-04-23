@@ -7,7 +7,6 @@ Template.loginDropdown.events
     Meteor.logout (err) ->
       Meteor._debug err if err
     event.preventDefault()
-    template.$('.dropdown-toggle').dropdown('toggle') # close dropdown
 
   "click .user-accounts-dropdown-apps a": (event, template) ->
     if @.route is "createProduct"
@@ -22,5 +21,4 @@ Template.loginDropdown.events
       return
     else if @.route
       event.preventDefault()
-      template.$('.dropdown-toggle').dropdown('toggle') # close dropdown
       Router.go(@.route)
