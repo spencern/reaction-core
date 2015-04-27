@@ -7,16 +7,14 @@ Template.memberForm.events
       if error?
         console.log(error)
         if error.reason != ''
-          Alerts.add error, "danger", html: true
+          Alerts.add error, "alert", html: true
         else
-          Alerts.add "Error sending email, possible configuration issue." + error, "danger"
+          Alerts.add "Error sending email, possible configuration issue." + error, "alert"
         return false
       else
         Alerts.add i18n.t("app.invitationSent", "Invitation sent."), "success", autoHide: true
-        $('.member-form').addClass('hidden')
-        $('.settings-account-list').show()
+        $('member-form').foundation('reveal', 'close')
         return true
 
-  "click .close-button": (event, template) ->
-    $('.member-form').addClass('hidden')
-    $('.settings-account-list').show()
+  "click #button-member-add-cancel": (event, template) ->
+    $('#member-form').foundation('reveal', 'close')

@@ -1,8 +1,5 @@
 <template name="shopAccounts">
-<div class="row">
-<h2>Access<small> Permissions</small></h2>
-</div>
-<div class="well">
+  <h2>Access<small> Permissions</small></h2>
   <div class="settings-account-list">
     <table class="table staff-table">
       <thead>
@@ -18,9 +15,10 @@
       {{/each}}
     </table>
   {{#if hasOwnerAccess}}
-    <button type="button" class="btn btn-default button-add-member">Add a staff member</button>
+    <a href="#" data-reveal-id="memberForm" type="button" id="button-add-member" class="wire-button">Add a staff member</a>
   {{/if}}
   </div>
- {{>memberForm}}
-</div>
+  <div class="member-form reveal-modal" id="member-form" data-reveal aria-labelledby="Member Form" aria-hidden="true" role="dialog">
+    {{>memberForm}}
+  </div>
 </template>

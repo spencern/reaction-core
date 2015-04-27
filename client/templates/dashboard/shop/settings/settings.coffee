@@ -1,3 +1,8 @@
+# Example of how to run a foundation reflow after rendering a template
+Template.shopSettings.rendered = ->
+  $(document).foundation('tab', 'reflow')
+  return;
+
 Template.shopSettings.helpers
   packageData: ->
     return ReactionCore.Collections.Packages.findOne({name:"core"})
@@ -47,32 +52,32 @@ AutoForm.hooks shopEditForm:
     Alerts.add "Shop general settings saved.", "success", autoHide: true
 
   onError: (operation, error, template) ->
-    Alerts.add "Shop general settings update failed. " + error, "danger"
+    Alerts.add "Shop general settings update failed. " + error, "alert"
 
 AutoForm.hooks shopEditAddressForm:
   onSuccess: (operation, result, template) ->
     Alerts.add "Shop address settings saved.", "success", autoHide: true
 
   onError: (operation, error, template) ->
-    Alerts.add "Shop address settings update failed. " + error, "danger"
+    Alerts.add "Shop address settings update failed. " + error, "alert"
 
 AutoForm.hooks shopEditEmailForm:
   onSuccess: (operation, result, template) ->
     Alerts.add "Shop mail settings saved.", "success", autoHide: true
 
   onError: (operation, error, template) ->
-    Alerts.add "Shop mail settings update failed. " + error, "danger"
+    Alerts.add "Shop mail settings update failed. " + error, "alert"
 
 AutoForm.hooks shopEditSettingsForm:
   onSuccess: (operation, result, template) ->
     Alerts.add "Shop settings saved.", "success", autoHide: true
 
   onError: (operation, error, template) ->
-    Alerts.add "Shop setting update failed. " + error, "danger"
+    Alerts.add "Shop setting update failed. " + error, "alert"
 
 AutoForm.hooks shopEditOptionsForm:
   onSuccess: (operation, result, template) ->
     Alerts.add "Shop options saved.", "success", autoHide: true
 
   onError: (operation, error, template) ->
-    Alerts.add "Shop options update failed. " + error, "danger"
+    Alerts.add "Shop options update failed. " + error, "alert"

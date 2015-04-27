@@ -8,6 +8,9 @@ ReactionCore.Schemas.Email = new SimpleSchema
   verified:
     type: Boolean
     defaultValue: false
+    autoform:
+      afFieldInput:
+        type: "hidden"
 
 ###
 # AddressBook
