@@ -16,23 +16,23 @@
     <div class="panel-body">
 
       <div class="row">
-        <div class="col-xs-6 col-sm-2">
+        <div class="small-6 medium-2 columns">
           <strong>
             <span data-i18n="cartCompleted.status">Status</span>
           </strong>
         </div>
-        <div class="col-xs-6 col-sm-10">
+        <div class="small-6 small-10 columns">
           {{status}}
         </div>
       </div>
 
       <div class="row order-address-info">
-        <div class="col-xs-6 col-sm-2">
+        <div class="small-12 medium-2 columns">
           <strong>
             <span data-i18n="cartCompleted.destination">Destination</span>
           </strong>
         </div>
-        <div class="col-xs-10">
+        <div class="small-12 medium-10 columns">
           {{#with shipping.address}}
             <span>
               <address>
@@ -47,23 +47,23 @@
       </div>
 
       <div class="row order-shipment-info">
-        <div class="col-xs-6 col-sm-2">
+        <div class="small-12 medium-2 columns">
           <strong>
             <span data-i18n="cartCompleted.shipment">Shipment</span>
           </strong>
         </div>
-        <div class="col-xs-10">
+        <div class="small-12 medium-10 columns">
           {{shipping.shipmentMethod.method.label}}
         </div>
       </div>
 
       <div class="row order-payment-info">
-        <div class="col-xs-6 col-sm-2">
+        <div class="small-12 medium-2 columns">
           <strong>
             <span data-i18n="cartCompleted.payment">Payment</span>
           </strong>
         </div>
-        <div class="col-xs-10">
+        <div class="small-12 medium-10 columns">
           {{#each payment.paymentMethod}}
           <span id="order-payment-method">{{storedCard}}</span>
           <span data-id="cartCompleted.reference">Ref:</span>
@@ -74,7 +74,7 @@
       </div>
 
       <div class="row order-group-title">
-        <div class="col-xs-12">
+        <div class="small-12">
           <strong>
             <span id="order-item-count">{{itemCount}}</span>
             <span data-i18n="cartCompleted.itemsFrom">item(s) from</span>
@@ -84,7 +84,7 @@
       </div>
 
       <div class="row order-list-items">
-        <div class="col-xs-12">
+        <div class="small-12 columns">
           {{> ordersListItems}}
         </div>
       </div>

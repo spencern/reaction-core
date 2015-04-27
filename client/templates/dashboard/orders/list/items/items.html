@@ -1,7 +1,7 @@
 <template name="ordersListItems">
-{{#each items}}
-  <div class="row order-list-items">
-      <div class="col-xs-3 col-sm-1">
+  {{#each items}}
+    <div class="row order-list-items">
+      <div class="small-3 medium-2 large-1 columns">
         <div class="thumbnail order-item-img">
           {{#with media}}
             <img src="{{url store='thumbnail'}}">
@@ -10,9 +10,9 @@
           {{/with}}
         </div>
       </div>
-      <div class="col-xs-8 col-sm-11 order-list-item-details">
+      <div class="small-9 medium-10 large-11 columns order-list-item-details">
         <span class="completed-order-item-price">
-          <i class="badge">{{quantity}}</i>
+          <i class="label qty-label">{{quantity}}</i>
         </span>
         <span class="completed-order-item-title">
           <span>{{variants.title}}</span>
@@ -20,7 +20,6 @@
           <span>{{formatPrice variants.price}}</span>
         </span>
       </div>
-
-  </div>
-{{/each}}
+    </div>
+  {{/each}}
 </template>
