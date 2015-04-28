@@ -171,6 +171,8 @@ Package.onUse(function (api) {
 
     "client/templates/layout/layout.html",
     "client/templates/layout/layout.coffee",
+    
+    "client/templates/layout/checkoutLayout.html",
 
     "client/templates/layout/header/header.html",
     "client/templates/layout/header/header.coffee",

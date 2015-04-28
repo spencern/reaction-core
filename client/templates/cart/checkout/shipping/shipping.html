@@ -9,11 +9,15 @@
     {{> Template.dynamic template=template}}
   {{else}}
     <div class="panel-body">
-      <div class="alert alert-danger">
-        <span data-i18n="checkoutShipping.noShippingPackages">No shipping packages are configured. </span>
-        <a href="/dashboard">
-          <span data-i18n="checkoutShipping.configureNow">Configure now.</span>
-        </a>
+      <div class="row">
+        <div class="small-12 columns">
+          <div class="alert alert-danger">
+            <span data-i18n="checkoutShipping.noShippingPackages">No shipping packages are configured. </span>
+            <a href="/dashboard">
+              <span data-i18n="checkoutShipping.configureNow">Configure now.</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   {{/each}}
