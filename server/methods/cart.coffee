@@ -6,11 +6,18 @@ Match.OptionalOrNull = (pattern) -> Match.OneOf undefined, null, pattern
 #  create, merge the session and user carts and return cart cursor
 #
 # There should be one cart for each independent, non logged in user session
-# When a user logs in that cart now belongs to that user and we use the a single user cart.
-# If they are logged in on more than one devices, regardless of session, the user cart will be used
-# If they had more than one cart, on more than one device,logged in at seperate times then merge the carts
+#
+# When a user logs in that cart now belongs to that user and
+# we use the a single user cart.
+#
+# If they are logged in on more than one devices, regardless of session,
+# the user cart will be used
+#
+# If they had more than one cart, on more than one device,
+# logged in at seperate times then merge the carts
 #
 ###
+
 @getCurrentCart = (sessionId, shopId, userId) ->
   check sessionId, String
   check shopId, Match.OptionalOrNull(String)
@@ -25,7 +32,10 @@ Match.OptionalOrNull = (pattern) -> Match.OneOf undefined, null, pattern
   # if sessionCart just logged out, remove sessionId and create new sessionCart
   #
   if currentCarts.count() is 0
-    newCartId = Cart.insert  sessions: [sessionId], shopId: shopId, userId: userId
+    newCartId = Cart.insert(
+      sessions: [sessionId],
+      shopId: shopId,
+      userId: userId)
     ReactionCore.Events.debug "Created new session cart", newCartId
     currentCart = Cart.find newCartId
     return currentCart
@@ -63,7 +73,8 @@ Match.OptionalOrNull = (pattern) -> Match.OneOf undefined, null, pattern
               items: $each: cart.items
               sessions: $each: cart.sessions
         Cart.remove cart._id
-        ReactionCore.Events.debug "Updated user cart", cart._id, "with sessionId: " + sessionId
+        ReactionCore.Events.debug(
+          "Updated user cart", cart._id, "with sessionId: " + sessionId)
         return Cart.find userCart._id
       # neither a user existing user cart, just add userId
       else if !userCart and !cart.userId
@@ -75,7 +86,9 @@ Match.OptionalOrNull = (pattern) -> Match.OneOf undefined, null, pattern
   # if no user cart actions, just return current cart
   if currentCarts.count() is 1
     cart = currentCarts.fetch()
-    ReactionCore.Events.debug "getCurrentCart returned sessionId:" + sessionId + " cartId: " + cart[0]._id
+    ReactionCore.Events.debug(
+      "getCurrentCart returned sessionId:" +
+       sessionId + " cartId: " + cart[0]._id)
     currentCarts = Cart.find cart[0]._id
     return currentCarts
 
@@ -104,7 +117,9 @@ Meteor.methods
     currentCart = Cart.findOne cartId
 
     # TODO: refactor to check currentCart instead of another findOne
-    cartVariantExists = Cart.findOne _id: currentCart._id, "items.variants._id": variantData._id
+    cartVariantExists = Cart.findOne(
+      _id: currentCart._id,
+      "items.variants._id": variantData._id)
     # update quantity for existing cart variant
     if cartVariantExists
       Cart.update {
@@ -115,7 +130,9 @@ Meteor.methods
         $inc: 'items.$.quantity': quantity
       (error, result) ->
         if error
-          ReactionCore.Events.warn "error adding to cart" , Cart.simpleSchema().namedContext().invalidKeys()
+          ReactionCore.Events.warn(
+            "error adding to cart",
+            Cart.simpleSchema().namedContext().invalidKeys())
           return error
         return
     # add new cart items
@@ -128,7 +145,9 @@ Meteor.methods
         quantity: quantity
         variants: variantData }, (error, result) ->
         if error
-          ReactionCore.Events.warn "error adding to cart", Cart.simpleSchema().namedContext().invalidKeys()
+          ReactionCore.Events.warn(
+            "error adding to cart",
+            Cart.simpleSchema().namedContext().invalidKeys())
           return
         return
 
@@ -159,7 +178,9 @@ Meteor.methods
     order = Orders.findOne orderId
     return false unless order
     for product in order.items
-      Products.update {_id: product.productId, "variants._id": product.variants._id}, {$inc: {"variants.$.inventoryQuantity": -product.quantity }}
+      Products.update(
+        {_id: product.productId, "variants._id": product.variants._id},
+        {$inc: {"variants.$.inventoryQuantity": -product.quantity }})
     return
 
   ###
@@ -217,7 +238,8 @@ Meteor.methods
 
     catch error
       ReactionCore.Events.info "error in order insert"
-      ReactionCore.Events.warn error, Orders.simpleSchema().namedContext().invalidKeys()
+      ReactionCore.Events.warn(error,
+        Orders.simpleSchema().namedContext().invalidKeys())
       return error
 
     # return new orderId
