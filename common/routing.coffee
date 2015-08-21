@@ -20,12 +20,11 @@ Router.configure
   notFoundTemplate: "notFound"
   loadingTemplate: "loading"
   onBeforeAction: ->
-    @render "loading"
-    Alerts.removeSeen()
-    $(document).trigger('closeAllPopovers')
-    $(window).scrollTop(0)
+    if Meteor.isClient
+      @render "loading"
+      Alerts.removeSeen()
+      $(document).trigger('closeAllPopovers')
     @next()
-
 
 # we always need to wait on these publications
 Router.waitOn ->
@@ -144,7 +143,7 @@ Router.map ->
     controller: ShopController
     path: 'product/:_id/:variant?'
     template: 'productDetail'
-    waitOn: ->
+    subscriptions: ->
       @subscribe 'Product', @params._id
     onBeforeAction: ->
       variant = @params.variant || @params.query.variant
