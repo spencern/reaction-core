@@ -90,6 +90,9 @@ ReactionCore.Schemas.Document = new SimpleSchema
 ReactionCore.Schemas.History = new SimpleSchema
   event:
     type: String
+  value:
+    type: String
+    optional: true
   userId:
     type: String
   updatedAt:
