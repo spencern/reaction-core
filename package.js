@@ -437,6 +437,7 @@ Package.onTest(function(api) {
 
   api.use('reactioncommerce:core');
   api.use('reactioncommerce:bootstrap-theme');
+  api.use('reactioncommerce:reaction-paypal');
 
   api.addFiles('tests/jasmine/server/integration/shops.coffee', 'server');
   api.addFiles('tests/jasmine/server/integration/accounts.coffee', 'server');

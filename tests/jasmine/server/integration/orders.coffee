@@ -296,6 +296,11 @@ describe 'processPayments', ->
   
   it 'should process a payment if payment mode
     is authorize and status is approved', (done) ->
+    order = Factory.create 'authorizedApprovedPaypalOrder'
     
+    spyOn(Meteor['Paypal'], 'capture').and.returnValue(
+      {capture: {id: Random.id()}})
+      
+    Meteor.call 'processPayments', order._id
     done()
     
