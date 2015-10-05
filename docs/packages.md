@@ -1,42 +1,42 @@
 # Packages
-Reaction packages are Meteor packages that add a call to `ReactionCore.registerPackage` that declares the Meteor package to the Reaction registry.
+Reaction packages are Meteor packages that add a call to `ReactionCore.registerPackage` declaring the package structure to the Reaction registry.
+
+## Core Packages
+For local core package development you must _git clone_ packages locally, either into `reaction/packages`, or define the `PACKAGES_DIR` env variable for an alternate location.
+
+The `bin/clone-packages.sh` is a helper script that will clone all current reactioncommerce:* packages into the PACKAGES_DIR location.
+
+First set your PACKAGES_DIR variable:
+
+```bash
+export PACKAGES_DIR="~/reaction/packages"
+```
+
+Checkout Reaction and execute `clone-packages.sh`.
+
+```bash
+cd ~
+git clone https://github.com/reactioncommerce/reaction.git
+cd reaction
+./bin/clone-packages.sh
+meteor --settings settings/dev-settings.json
+```
+
+This is our recommended practice, and ensure you are working with the default branches (development) for all the Reaction packages.
+
+_Note: Pull requests are happily accepted, please make your GitHub pull request a merge to the `development` branch, and not master._
+
+_Tip: Copy the `settings/dev.settings.json` to `settings/settings.json` and edit the file to retain authentication and Meteor settings between `meteor reset`. Start with `meteor --settings settings/settings.json --raw-logs`_
 
 ## Public packages
 If you create a package and would like to share it with the Meteor community, you can publish the package to the Meteor package registry with `meteor publish`.
 
 _Publishing packages is not a requirement to share or deploy packages._
 
-If you would like to share a package in the registry, but don't want to be responsible for long term ownership of the package, create an issue and let us know. We can also fork and maintain a [Reaction Commerce published org version of your package](https://atmospherejs.com/reactioncommerce).
+If you would like to share a package in the registry, but don't want to be responsible for long term ownership of the package, create an issue and let us know. We can also fork and maintain a [Reaction Commerce published org version of your package](//atmospherejs.com/reactioncommerce).
 
 ## Private packages
 Packages within Reaction are Meteor packages. There are private packages, that a developer can create to customize any of Reaction's functionality. Private packages can be deployed by including them in the `packages` folder.
-
-## Core Packages
-For local core package development you must _git clone_ packages locally, either into `reaction/packages`, or define the `PACKAGES_DIR` env variable for an alternate location.
-
-An example fresh development structure might look like:
-
-```bash
-mkdir ~/reaction-packages
-cd ~/reaction-packages
-git clone https://github.com/reactioncommerce/reaction-core.git
-git clone https://github.com/reactioncommerce/reaction-core-theme.git
-```
-
-and then run Reaction as normal, but using `PACKAGES_DIR`
-
-```bash
-cd ~
-git clone https://github.com/reactioncommerce/reaction.git
-cd reaction
-PACKAGES_DIR="~/reaction-packages" meteor --settings settings/settings.json
-```
-
-It's a little more work, but it's a good idea to make sure you are in the `development` branches, and clone all used Reaction packages to ensure you're working with a complete development enviroment.
-
-_Note: Pull requests are happily accepted, please make your GitHub pull request a merge to the `development` branch, and not master._
-
-_Tip: Copy the `settings/dev.settings.json` to `settings/settings.json` and edit the file to retain authentication and Meteor settings between `meteor reset`. Start with `meteor --settings settings/settings.json --raw-logs`_
 
 **Create packages**
 
@@ -44,7 +44,7 @@ _Tip: Copy the `settings/dev.settings.json` to `settings/settings.json` and edit
 meteor create --package
 ```
 
-See [Meteor docs](http://docs.meteor.com/#/full/writingpackages) for additional help creating packages.
+See [Meteor docs](//docs.meteor.com/#/full/writingpackages) for additional help creating packages.
 
 **Update package.js**
 
@@ -65,9 +65,9 @@ Package.onUse(function (api, where) {
 });
 ```
 
-Where name is the `org-user:packagename` that you will use to publish this package to the Meteor registry. See: [Meteor package.js docs](http://docs.meteor.com/#/full/packagejs).
+Where name is the `org-user:packagename` that you will use to publish this package to the Meteor registry. See: [Meteor package.js docs](//docs.meteor.com/#/full/packagejs).
 
-Any files you create in your package you will need to add in your [package.js](http://docs.meteor.com/#/full/packagejs) file.
+Any files you create in your package you will need to add in your [package.js](//docs.meteor.com/#/full/packagejs) file.
 
 ```javascript
 api.addFiles('myfile');
@@ -209,6 +209,8 @@ layout: [
 ]
 ```
 
+For more details about layouts, and workflows see: [workflow.md](workflow.md)
+
 **_Special Usage_**
 - `cycle`  1- Core, 2- Stable, 3- Testing 4- Early
 - `container` group alike for presentation _example: used to connect settings on dashboard app card registry object_
@@ -258,40 +260,10 @@ From templates, you can create additional dynamic template `provides` using the 
   {{/each}}
 ```
 
-**Widgets**
-
-Add widgets to your package to be included on the `console dashboard` by including a registry entry and a template that provides 'widget'.
-
-```
-<template name="reactionHelloworldWidget">
-    <div class="dashboard-widget">
-      <div class="dashboard-widget-center">
-        <div>
-          <h3 class="helloworld-text">Widget Panel</h3><small>your widget</small>
-        </div>
-      </div>
-    </div>
-</template>
-```
-
-_See example: packages/reaction-core/client/templates/dashboard/orders/widget/widget.html_
-
-_Tip: the `dashboard-widget` and `dashboard-widget-center` classes will create touch/swipeable widget boxes._
-
-Include in **server/register.coffee** registry:
-
-```
-    # order widgets
-    {
-      template: "reactionHelloworldWidget"
-      provides: 'widget'
-    }
-```
-
-You can also extend or replace any core template using [template extensions](https://github.com/aldeed/meteor-template-extension/).
+You can also extend or replace any core template using [template extensions](//github.com/aldeed/meteor-template-extension/).
 
 #### Permissions
-[alanning:roles](https://github.com/alanning/meteor-roles) package provides Reaction permissions support.
+[alanning:roles](//github.com/alanning/meteor-roles) package provides Reaction permissions support.
 
 **Permissions are grouped by `shopId`.**
 
@@ -385,7 +357,7 @@ ReactionCore.registerPackage
 
 ###Routes
 
-[Iron:router](https://github.com/iron-meteor/iron-router) provides routing in Reaction.
+[Iron:router](//github.com/iron-meteor/iron-router) provides routing in Reaction.
 
 Routes are defined, both in app and packages. Most often found in `common/routers.js`.
 
@@ -405,7 +377,7 @@ In addition to defining the route in the `Router.map`, you should add the route 
 
 ###Collections
 
-[AutoForm, collection2, simple-schema](https://github.com/aldeed/meteor-autoform) packages provide functionality for defining forms, collections and schemas.
+[AutoForm, collection2, simple-schema](//github.com/aldeed/meteor-autoform) packages provide functionality for defining forms, collections and schemas.
 
 You can extend core collections, schemas in your package. You can also create your own collections.
 
@@ -437,13 +409,13 @@ Community tested Meteor packages that enforce security rules are installed as re
 
 **ongoworks/security**<br>**alanning:meteor-roles**<br>**audit-argument-checks**
 
-Use [`check`](http://docs.meteor.com/#/full/check) for all `Meteor.methods` arguments.
+Use [`check`](//docs.meteor.com/#/full/check) for all `Meteor.methods` arguments.
 
 You can remove with `meteor remove audit-argument-checks` if necessary, but packages will be required to pass `check` to be accepted as Reaction packages.
 
 **browser-policy**
 
-The [browser-policy](https://atmospherejs.com/meteor/browser-policy) package lets you set security-related policies that will be enforced by newer browsers. These policies help you prevent and mitigate common attacks like cross-site scripting and clickjacking.
+The [browser-policy](//atmospherejs.com/meteor/browser-policy) package lets you set security-related policies that will be enforced by newer browsers. These policies help you prevent and mitigate common attacks like cross-site scripting and clickjacking.
 
 `browser-policy` is installed by reaction-core and is not optional.
 
@@ -453,6 +425,6 @@ You can develop, or even deploy with your packages in the `reaction/packages` di
 
 To have your package included in a Reaction release, please create a GitHub issue.
 
-See [meteor publish](http://docs.meteor.com/#/full/meteorpublish) for details on publishing to the Meteor package registry.
+See [meteor publish](//docs.meteor.com/#/full/meteorpublish) for details on publishing to the Meteor package registry.
 
 _We can fork and publish packages under the reactioncommerce organization if the packages are included, and a pull request is made in reaction-core or reaction application distribution._

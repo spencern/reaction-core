@@ -1,51 +1,217 @@
-#ReactionWorkflow
+# Layout and Workflows
+Reaction template display (layout) and workflow rules are created and stored in the Package registry.
 
-# Shops.workflows
-Where "provides" is the name of the the matching product types, and the workflow array contains an ordered array of independent workflow templates that will apply for this product during checkout.
+A workflow is similar to `package.registry` entries,  but  `package.layout` entries are defined by the following properties:
 
-`Product.type = 'simple' #by default`
+- It does not control routes anywhere.
+- each workflow in the package registry has a definition in Shops
+- stores **status** in a **collection** specified in Shops
+- collections should have attached *Workflow schema*
 
-On checkout, review product.type (s) and merge matching workflows into single workflow (could also later be a grouped cart flow)
+- **audience** is just another label for 'permissions', essentially just permissions for UIX.
+- can be used to control page layout for the content manager
+- audience can be used to control different check out, different product views,  for users with different roles..
 
-So if you had an item.type = 'simple' and item.type = 'download' and the download workflow was defined as:
+- a **workflow** controls "the how and where" of layout components
+- can be used to trigger events from analytics events
+- to disable a workflow template remove audience roles
+- routes could be dynamically generated from registry
+
+<u>*The default workflow configuration components are configured in the following manner:*</u>
+
+## Shops Collection
 
 ```
-    "defaultWorkflows": [
+    "layout" : [
         {
-            "provides": "download",
-            "workflow": [
-                "checkoutLogin",
-                "checkoutReview",
-                "checkoutPayment",
-                "checkoutDownload"
+            "layout" : "coreLayout",
+            "workflow" : "coreLayout",
+            "theme" : "default",
+            "enabled" : true
+        },
+        {
+            "layout" : "coreLayout",
+            "workflow" : "coreCartWorkflow",
+            "theme" : "default",
+            "collection" : "Cart",
+            "enabled" : true
+        },
+        {
+            "layout" : "coreLayout",
+            "workflow" : "coreOrderWorkflow",
+            "theme" : "default",
+            "collection" : "Orders",
+            "enabled" : true
+        }
+    ]
+```
+
+## Package Registry - Layout
+**Available in the Packages collection, ie: `package.layout`**
+
+```javascript
+"layout" : [
+        {
+            "template" : "checkoutLogin",
+            "label" : "Login",
+            "workflow" : "coreCartWorkflow",
+            "container" : "checkout-steps-main",
+            "audience" : [
+                "guest",
+                "anonymous"
+            ],
+            "priority" : "1",
+            "position" : "1"
+        },
+        {
+            "template" : "checkoutAddressBook",
+            "label" : "Address Details",
+            "workflow" : "coreCartWorkflow",
+            "container" : "checkout-steps-main",
+            "audience" : [
+                "guest",
+                "anonymous"
+            ],
+            "priority" : "2",
+            "position" : "2"
+        },
+        {
+            "template" : "coreCheckoutShipping",
+            "label" : "Shipping Options",
+            "workflow" : "coreCartWorkflow",
+            "container" : "checkout-steps-main",
+            "audience" : [
+                "guest",
+                "anonymous"
+            ],
+            "priority" : "3",
+            "position" : "3"
+        },
+        {
+            "template" : "checkoutReview",
+            "label" : "Review Payment",
+            "workflow" : "coreCartWorkflow",
+            "container" : "checkout-steps-side",
+            "audience" : [
+                "guest",
+                "anonymous"
+            ],
+            "priority" : "4",
+            "position" : "4"
+        },
+        {
+            "template" : "checkoutPayment",
+            "label" : "Complete",
+            "workflow" : "coreCartWorkflow",
+            "container" : "checkout-steps-side",
+            "audience" : [
+                "guest",
+                "anonymous"
+            ],
+            "priority" : "5",
+            "position" : "5"
+        },
+        {
+            "template" : "coreOrderCreated",
+            "label" : "Created",
+            "workflow" : "coreOrderWorkflow",
+            "audience" : [
+                "dashboard/orders"
+            ]
+        },
+        {
+            "template" : "coreShipmentTracking",
+            "label" : "Tracking",
+            "workflow" : "coreOrderWorkflow",
+            "audience" : [
+                "dashboard/orders"
+            ]
+        },
+        {
+            "template" : "coreOrderDocuments",
+            "label" : "Preparation",
+            "workflow" : "coreOrderWorkflow",
+            "audience" : [
+                "dashboard/orders"
+            ]
+        },
+        {
+            "template" : "coreProcessPayment",
+            "label" : "Process Payments",
+            "workflow" : "coreOrderWorkflow",
+            "audience" : [
+                "dashboard/orders"
+            ]
+        },
+        {
+            "template" : "coreShipmentShipped",
+            "label" : "Shipped",
+            "workflow" : "coreOrderWorkflow",
+            "audience" : [
+                "dashboard/orders"
+            ]
+        },
+        {
+            "template" : "coreOrderCompleted",
+            "label" : "Completed",
+            "workflow" : "coreOrderWorkflow",
+            "audience" : [
+                "dashboard/orders"
+            ]
+        },
+        {
+            "template" : "coreOrderAdjustments",
+            "label" : "Adjusted",
+            "workflow" : "coreOrderWorkflow",
+            "audience" : [
+                "dashboard/orders"
             ]
         }
     ]
 ```
 
-If the cart then has two items, one 'download' and one 'simple' you would end up with a merged workflow
-1. "checkoutLogin"
-2. "checkoutAddressBook"
-3. "coreCheckoutShipping"
-4. "checkoutReview"
-5. "checkoutPayment"
-6. "checkoutDownload"
-7. "checkoutCompleted"
+## Collection Workflows
+For each collection using a workflow, a workflow schema is attached.  The state/status of a workflow is stored as an object on each document in the collection.
 
-Where each workflow entry represents the appearance order and the template to load.
-
-`Meteor.call('layout/pushWorkflow', workflow , status)`
-
-`workflow` and `status` are required.
-
-```
-Meteor.call('layout/pushWorkflow', "coreCartWorkflow", "coreCheckoutShipping");
+```javascript
+"workflow" : {
+    "status" : "checkoutLogin"
+    "workflow": ["new", "checkoutLogin"]
+},
 ```
 
-####Client helpers
+Where **status** is the current workflow, and **workflow** are the workflow steps that have begun, or finished processing.
 
-See: `client/helpers/cart.coffee`
+If `workflow.workflow` contains the current `workflow.status`, that means the workflow is processing, and when status now longer contains the workflow, but it exists in `workflow.workflow` the workflow has been completed.
 
-####Meteor.methods
+## Workflow Schema
+For reference, the Workflow schema is:
 
-See:  `server/methods/cart.coffee`
+```javascript
+ReactionCore.Schemas.Workflow = new SimpleSchema({
+  template: {
+    type: String,
+    optional: true
+  },
+  label: {
+    type: String,
+    optional: true
+  },
+  provides: {
+    type: String,
+    optional: true
+  },
+  audience: {
+    type: [String],
+    optional: true
+  },
+  status: {
+    type: String,
+    optional: true
+  },
+  workflow: {
+    type: [String],
+    optional: true
+  }
+});
+```
