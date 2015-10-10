@@ -306,6 +306,9 @@ Meteor.methods({
   "orders/inventoryAdjust": function (orderId) {
     check(orderId, String);
     let order = ReactionCore.Collections.Orders.findOne(orderId);
+    if (!order) {
+      return;
+    }
 
     _.each(order.items, function (product) {
       ReactionCore.Collections.Products.update({
