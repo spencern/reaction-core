@@ -306,19 +306,20 @@ Meteor.methods({
   "orders/inventoryAdjust": function (orderId) {
     check(orderId, String);
     let order = ReactionCore.Collections.Orders.findOne(orderId);
-
-    if (order) {
-      _.each(order.items, function (product) {
-        ReactionCore.Collections.Products.update({
-          "_id": product.productId,
-          "variants._id": product.variants._id
-        }, {
-          $inc: {
-            "variants.$.inventoryQuantity": -product.quantity
-          }
-        });
-      });
+    if (!order) {
+      return;
     }
+
+    _.each(order.items, function (product) {
+      ReactionCore.Collections.Products.update({
+        "_id": product.productId,
+        "variants._id": product.variants._id
+      }, {
+        $inc: {
+          "variants.$.inventoryQuantity": -product.quantity
+        }
+      });
+    });
     return;
   },
 
